@@ -1,0 +1,59 @@
+<!-- <div class="sidebar" [ngClass]="{ 'expanded': isExpanded }">
+  <div class="header">
+    <h1 class="title">
+      deskbird
+    </h1>
+    <div class="toggle" (click)="handleSidebarToggle()">
+      <span class="chevron" style="font-size: 17px;"></span>
+    </div>
+  </div>
+  <div class="content">
+    <div class="link">
+      <div class="content">
+        <div class="icon">
+          <span class="material-symbols-outlined">
+            widgets
+          </span>
+        </div>
+        <div class="title">Dashboard</div>
+      </div>
+    </div>
+    <div class="link">
+      <div class="content" >
+        <div class="icon">
+          <span class="material-symbols-outlined">
+            logout
+            </span>
+        </div>
+        <div class="title">Logout</div>
+      </div>
+    </div>
+  </div>
+  <div class="footer"></div>
+</div> -->
+
+
+<div class="sidenav" [ngClass]="collapsed ? 'sidenav-collapsed':''">
+  <div class="logo-container">
+    <button class="logo" (click)="toggleCollapsed()">L</button>
+    <div class="logo-text" *ngIf="collapsed">Logoipsum</div>
+    <button class="btn-close" *ngIf="collapsed" (click)="closeSidenav()">
+        <span class="material-icons  collapse-button close-icon">close</span>
+    </button>
+  </div>
+  <ul class="sidenav-nav">
+    <li class="sidenav-nav-item" *ngFor="let data of navdata">
+      <a class="sidenav-nav-link" [routerLink]="[data.routerLink]"
+      routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <span class="material-icons sidenav-link-icon">{{data.icon}}</span>
+        <span class="sidenav-link-text" *ngIf="collapsed">{{data.label}}</span>
+      </a>
+    </li>
+    <li class="sidenav-nav-item" (click)="logout()">
+      <a class="sidenav-nav-link">
+        <span class="material-icons sidenav-link-icon">logout</span>
+        <span class="sidenav-link-text" *ngIf="collapsed">Logout</span>
+      </a>
+    </li>
+  </ul>
+</div>
