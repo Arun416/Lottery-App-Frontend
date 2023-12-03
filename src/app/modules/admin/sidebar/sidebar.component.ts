@@ -20,9 +20,16 @@ export class SidebarComponent implements OnInit {
   handleSidebarToggle = () => this.toggleSidebar.emit(!this.isExpanded); */
   @Output() onToggleSidebar: EventEmitter<SideNavToggle> = new EventEmitter();
   screenWidth= 0;
-  collapsed = true;
+  collapsed = false;
   navdata = navbarData;
-  constructor(private router:Router,private authService:AuthService) { }
+  tokenTimer:any;
+  
+  constructor(private router:Router,private authService:AuthService) {
+    var currentUser:any = JSON.parse(localStorage.getItem('currentUser')as any) 
+   /*  let expiresInDuration = currentUser.expiresIn;
+    
+    this.tokenTimer = setTimeout(()=>{ this.logout()}, expiresInDuration*1000);  */
+   }
 
   ngOnInit(): void {
     this.screenWidth = window.innerWidth;
@@ -40,13 +47,7 @@ export class SidebarComponent implements OnInit {
   }
 
   logout(){
-    this.router.navigate(['/admin/login'])
-    localStorage.removeItem('lottery_No');
-    localStorage.removeItem('sub_Lottery_No');
-    localStorage.removeItem('sub_Lottery_No1');
-    localStorage.removeItem('sub_Lottery_No2') 
-    this.authService.logout();
-    window.location.reload();
+   this.authService.logout();
   }
 
 }

@@ -1,15 +1,14 @@
 <div class="container">
-    <div class="row w-100  dashboard--content justify-content-center align-items-center">
+    <div class="row dashboard--content justify-content-center align-items-center">
         <form [formGroup]="lotForm"  (ngSubmit)="onSubmitLottery(lotForm.value)">
         <div class="col-md-12 col-sm-12 col-xs-12 mb-3">
-             <div class="float-end">
+            <div class="float-end">
                 <button class="btn btn-primary"  [disabled]="isLoading"  style="border-radius: 20px;">
                     <span class="material-symbols-outlined" [hidden]="isLoading" style="font-size: 16px;vertical-align: middle;">
                         check_circle
-                    </span><span style="padding-left: 5px;">Save   <i
-                        class="fa"
-                        [ngClass]="{'fa-spin fa-spinner': isLoading, 'fa-check': !isLoading}"
-                      ></i></span></button>
+                    </span><span style="padding-left: 5px;">Save</span>
+                    <i class="px-1 fa fa-spinner fa-spin" *ngIf="isLoading"></i>
+                </button>
              </div>
         </div>
         <div class="col-md-12 col-sm-12 col-xs-12  mb-4">
@@ -18,22 +17,22 @@
                 <td>
                     <input #box1 [readonly]="isReadOnly" class="form-control lottery-input" type="text" formControlName="textbox1"
                      maxlength="1" placeholder="0" aria-label="default input example" (keyup)="autoMoveEvent($event,'',box1,box2)"
-                     (keypress)="allowNumericValues($event)">
+                     (keypress)="allowNumericValues($event)" (focusin)="focusOnInput($event)">
                 </td>
                 <td>
                     <input #box2 [readonly]="isReadOnly" class="form-control lottery-input" type="text" formControlName="textbox2"
                     maxlength="1" placeholder="0" aria-label="default input example" (keyup)="autoMoveEvent($event,box1,box2,box3)"
-                    (keypress)="allowNumericValues($event)" >
+                    (keypress)="allowNumericValues($event)" (focusin)="focusOnInput($event)">
                 </td>
                 <td>
                     <input #box3 [readonly]="isReadOnly" class="form-control lottery-input" type="text" formControlName="textbox3"
                     maxlength="1" placeholder="0" aria-label="default input example" (keyup)="autoMoveEvent($event,box2,box3,box4)"
-                    (keypress)="allowNumericValues($event)" >
+                    (keypress)="allowNumericValues($event)" (focusin)="focusOnInput($event)">
                 </td>
                 <td>
                     <input #box4 [readonly]="isReadOnly" class="form-control lottery-input" type="text" formControlName="textbox4"
                     maxlength="1" placeholder="0" aria-label="default input example" (keyup)="autoMoveEvent($event,box3,box4,'')"
-                    (keypress)="allowNumericValues($event)">
+                    (keypress)="allowNumericValues($event)" (focusin)="focusOnInput($event)">
                 </td>
             </tr>
             <tr>
@@ -74,44 +73,55 @@
             </tr>
         </table>
     </div></form>
-    <div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="col-md-12 col-sm-12 col-xs-12" style="width: 900px;margin: 0;">
+        <div class="d-inline-flex  px-5 gap-2">
+            <div><p>Show Entries:</p></div>
+            <div>
+                <select (change)="onTableSizesChange($event)">
+                    <option *ngFor="let size of pageSizes">{{size}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="float-end pe-5">
+            <input class="form-control form-control-sm" placeholder="Search by LotteryNumber.." 
+            [(ngModel)]="searchTerm"  (input)="onSearchLottery(searchTerm)"/>
+            
+        </div>
         <table class="table  table-striped table-hover table-bordered" style="width: 800px;margin: 0 auto;">
             <thead >
-              <tr>
+              <tr style="cursor: pointer; user-select: none; ">
                 <!-- <th scope="col">#</th> -->
-                <th scope="col">Date</th>
+                <th scope="col" (click)="sort()">Date &nbsp;
+                    <span [hidden]="reverse">▼</span>
+                    <span [hidden]="!reverse">▲</span></th>
                 <th scope="col">Time</th>
                 <th scope="col">Lottery Number</th>
               </tr>
             </thead>
             <tbody *ngIf="lotteries_List?.length>0">
-              <tr *ngFor="let result  of lotteries_List;index as i">
-               
+              <tr *ngFor="let result  of lotteries_List | paginate: {
+                id:'listing_pagination',itemsPerPage:isItemsPerPage, currentPage: pagination,totalItems:totalRecords
+              }">
+            
                 <!-- <th scope="row">{{i+1}}</th> -->
                 <td>{{result.Date | date}}</td>
                 <td>{{result.Time|date: 'shortTime':'UTC+5:30'}}</td>
                 <td>{{result.lottery_Number}}</td>
               </tr>
             </tbody>
-           <!--  <tbody class="text-center mx-auto align-items-center" *ngIf="lotteries_List?.length<=0">
+            <tbody class="text-center mx-auto align-items-center" *ngIf="lotteries_List?.length<=0">
                 <span class="text-center text-secondary">No Data</span>
-            </tbody> -->
+            </tbody> 
           </table>
-       <!--    <div class="d-flex justify-content-between p-2">
-            <ngb-pagination
-                [collectionSize]="collectionSize"
-                [(page)]="page"
-                [pageSize]="pageSize"
-                (pageChange)="refreshCountries()"
-            >
-            </ngb-pagination>
-        
-            <select class="form-select" style="width: auto" [(ngModel)]="pageSize" (ngModelChange)="refreshCountries()">
-                <option [ngValue]="2">2 items per page</option>
-                <option [ngValue]="4">4 items per page</option>
-                <option [ngValue]="6">6 items per page</option>
-            </select>
-        </div> -->
+          <div class="d-flex flex-row justify-content-between  pt-2 mt-2">
+            <div class="px-4" style="margin-left: 18px;">
+                <p>Showing {{isItemsPerPage}} out of {{totalRecords}} Entries</p>
+            </div>   
+            <div class="float-end pe-3">
+                <pagination-controls id="listing_pagination" class="align-items-center"  previousLabel="Previous"
+                nextLabel="Next" (pageChange)="onTablePageChange($event)"></pagination-controls>
+            </div>
+          </div>
     </div>
     </div>
 </div>

@@ -4,6 +4,7 @@ import { AdminLoginComponent } from './admin-login.component';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
 
 const routes:Routes = [
   {path:'', component: AdminLoginComponent}
@@ -16,7 +17,8 @@ const routes:Routes = [
     RouterModule.forChild(routes),
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbToastModule
   ],
   exports: [AdminLoginComponent,RouterModule]
 })

@@ -12,14 +12,13 @@
     padding-top: 30px;
 }
 
-
 .lottery-fields{
     border-collapse: separate;
     border-spacing: 1em;
 }
 
 
-input ,input:focus{
+.lottery-input ,.lottery-input:focus{
     background-color: #E6E0E9;
     text-align: center;
     font-family: Roboto;
@@ -27,5 +26,9 @@ input ,input:focus{
     font-style: normal;
     font-weight: 600;
     border-radius: 0;
+}
+
+::ng-deep .ngx-pagination .current {
+    background-color: #0d6efd !important;
 }
 

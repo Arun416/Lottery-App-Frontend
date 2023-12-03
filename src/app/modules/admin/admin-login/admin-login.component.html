@@ -1,4 +1,5 @@
 <div class="container p-0">
+    <ng-template #successTpl> Login Success </ng-template>
     <div class="row mx-auto justify-content-center align-items-center w-100 p-0 login--content">
         <div class="col-md-6">
             <div class="card" style="width: 500px;height: 500px;">
@@ -31,14 +32,9 @@
                             </div>
                         </div>
                         <div class="col-12">
-                            <button [disabled]="loading" class="btn btn-primary  popup-btn pdl-5 rounded-3 px-3" style="width: 90px;">
+                            <button [disabled]="loading" class="btn btn-primary  popup-btn pdl-5 rounded-3 px-3" style="width: 90px;vertical-align: middle;">
                                 <span>Login </span>
-                               <!--  <span class=" text-right d-flex justify-content-end" *ngIf="loading">
-                                    <div class="spinner-border spinner-border-sm button-loader" role="status">
-                                      <span class="visually-hidden">Loading...</span>
-                                    </div>
-                                </span> -->
-                               
+                                <i class="px-1 fa fa-spinner fa-spin" *ngIf="loading"></i>
                             </button>
                         </div>
                     </div> </form>

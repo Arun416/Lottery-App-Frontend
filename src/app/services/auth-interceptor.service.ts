@@ -1,7 +1,14 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
 import { Observable, catchError, throwError } from "rxjs";
+import { AuthService } from "./auth.service";
+import { EventEmitter, Injectable } from "@angular/core";
 
+
+@Injectable()
 export class AuthInterceptorService implements HttpInterceptor{
+
+    constructor(public authService:AuthService){}
+    
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return next.handle(req)
       .pipe(
@@ -13,7 +20,8 @@ export class AuthInterceptorService implements HttpInterceptor{
           }
           else {
             if (requestError.status === 401) {
-                errorMsg = requestError.error.message
+              this.isTokenExpiredError(requestError)
+              errorMsg = requestError.error.message
             }
             else if (requestError.status === 400) {
                 errorMsg = requestError.error.message
@@ -26,4 +34,15 @@ export class AuthInterceptorService implements HttpInterceptor{
         })
       )
   }
+
+
+   private isTokenExpiredError(error: any): boolean {
+    console.log(error,"ok");
+    
+    if (error.error && error.error.message == 'Token expired. Please log in again.') {
+      this.authService.setTokenExpiredError(true);
+      return true;
+    }
+    return false;
+  } 
 }

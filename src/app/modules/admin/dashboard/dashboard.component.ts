@@ -1,7 +1,9 @@
 import { formatDate } from '@angular/common';
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Subject, debounceTime } from 'rxjs';
 import { LOTTERY } from 'src/app/models/lottery';
+import { AuthService } from 'src/app/services/auth.service';
 import { LotteryService } from 'src/app/services/lottery.service';
 
 
@@ -10,24 +12,33 @@ import { LotteryService } from 'src/app/services/lottery.service';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy  {
   lotteryEntryForm!:FormGroup;
   lotForm!:FormGroup;
-  lotteryArray:any[] = [];
+  lotteryArray:LOTTERY[] = [];
+  public pagination:number = 1;
+  public totalRecords = 0 ;
+  public pageSizes = [5,10,15];
+  public isItemsPerPage = 5;
+  reverse:boolean = false;
+  sortOrder: 'asc' | 'desc' = 'desc';
+  searchTerm:string = "";
+  private searchSubject = new Subject<string>();
+  private readonly debounceTimeMs = 300;
   storedLotteryNumber1:any;
   storedLotteryNumber2:any;
   storedLotteryNumber3:any;
   isReadOnly:boolean = false;
- 
   lotteries_List!:any;
-  timeEntries:any;
   isLoading:boolean = false;
-  page = 1;
-	pageSize = 4;
-  lotteries:any
+  
 
-  constructor(private fb: FormBuilder,
-    private el: ElementRef,private lotteryService:LotteryService) { }
+  constructor(
+    private fb: FormBuilder,
+    private el: ElementRef,
+    private lotteryService:LotteryService,
+    private authServ:AuthService) {
+  }
 
   ngOnInit(): void {
     
@@ -51,19 +62,20 @@ export class DashboardComponent implements OnInit {
       lottery_Number: ['']
     }) 
 
-    
-    this.getAllLotteryInfo();
+    this.getLottery();
     this.getLotteryValues();
-    // this.refreshCountries()
+    this.searchSubject.pipe(debounceTime(this.debounceTimeMs)).subscribe((searchValue) => {
+      this.onSearch(searchValue);
+    });
   }
 
-
- 
+  ngOnDestroy() {
+    this.searchSubject.complete();
+  }
 
   getLotteryValues(){
 
-    
-    let dataInitial:any = localStorage?.getItem('lottery_No')||null;
+    let dataInitial:any = localStorage.getItem('lottery_No')||null;
     
     let initArray:any = JSON.parse(dataInitial);
     this.lotForm.patchValue({
@@ -103,32 +115,37 @@ export class DashboardComponent implements OnInit {
       return false;
     }
     return true;
-
   }
 
-
-  /* refreshCountries() {
-		this.lotteries = this.lotteries_List.map((Date, i) => ({ id: i + 1, ...Date })).slice(
-			(this.page - 1) * this.pageSize,
-			(this.page - 1) * this.pageSize + this.pageSize,
-		);
-	} */
-
-  getAllLotteryInfo(){
-    this.lotteryService.getAllLotteries().subscribe({
+  getLottery(){
+    this.lotteryService.getAllLotteries(this.pagination,
+      this.isItemsPerPage,
+      'Time',
+      this.sortOrder,
+      this.searchTerm).subscribe({
       next:(res:any)=>{
-      console.log(res,"all lotteries");
-      this.lotteries_List = res.data;
+        this.lotteries_List = res.data.lotteries;
+        this.totalRecords = res.data.total;
+        this.getAllLotteryInfo(res.data.lotteries)
+      },
+      error:err=>{
+        console.log(err,"unauthorized");
+        if(err==="Token expired. Please log in again"){
+          this.authServ.logout()
+        }
+      }
+    })
+  }
 
-      this.lotteries_List.sort((a:any, b:any) => new Date(b.Time).getTime() - new Date(a.Time).getTime())
-          
+  getAllLotteryInfo(lotteries_List:any){
+         
     if(localStorage.getItem('lottery_No') === null && 
         localStorage.getItem('sub_Lottery_No')=== null &&
         localStorage.getItem('sub_Lottery_No1') === null &&
         localStorage.getItem('sub_Lottery_No2') === null
      ){
-     if(this.lotteries_List){
-      let splitNo = this.lotteries_List[0].lottery_Number.split('');
+     if(lotteries_List){
+      let splitNo = lotteries_List[0].lottery_Number.split('');
       console.log(splitNo);
       localStorage.setItem('lottery_No',JSON.stringify(splitNo))
       let data:any = localStorage.getItem('lottery_No');
@@ -183,9 +200,29 @@ export class DashboardComponent implements OnInit {
       this.storedLotteryNumber3 = JSON.parse(dataL);
     }
     }
+
+
+    /* if(this.lotForm.value.get('textbox1').valueChanges){
+      this.lotForm.value.get('textbox1').valueChanges.subscribe((newValue:any) => {
+        console.log('New value:', newValue);
+        // You can perform actions or validation based on the changing value here
+        // For example, update another FormControl, trigger an API call, etc.
+      });
+    }
+    else if(this.lotForm.value.get('textbox2').valueChanges){
+      this.lotForm.value.get('textbox2').valueChanges.subscribe((newValue:any) => {
+        console.log('New value:', newValue);
+        this.autoMoveEvent(0,0,0,newValue)
+
+      });
+    } */
+
+
+    
+
+
   }
-    })
-  }
+
 
   autoMoveEvent(e:any,p:any,c:any,n:any){
     var length = c.value.length;
@@ -196,8 +233,8 @@ export class DashboardComponent implements OnInit {
       localStorage.setItem('lottery_No',JSON.stringify(this.lotteryArray))
       let data:any = localStorage.getItem('lottery_No');
       this.storedLotteryNumber1 = JSON.parse(data)
-      if(n===''){
-        this.isReadOnly = true
+      if(n ===''){
+       
         for(let i=0; i<=this.storedLotteryNumber1.length;i++){
         if(i === this.storedLotteryNumber1.length){
         this.storedLotteryNumber1.shift();
@@ -240,8 +277,12 @@ export class DashboardComponent implements OnInit {
       this.storedLotteryNumber3 = JSON.parse(dataL);
         }
       }
+     
   }
 
+  focusOnInput(event:any){
+    event.target.select();
+  }
 
   onSubmitLottery(formData:any){
     this.isLoading = true
@@ -253,9 +294,35 @@ export class DashboardComponent implements OnInit {
      this.lotteryService.saveLottery(this.lotteryEntryForm.value).subscribe((res:any)=>{
       console.log(res);
       alert(res.message)
-      this.getAllLotteryInfo();
+      this.getLottery();
       this.isLoading= false;
     })  
-    // console.log(this.lotteryArray,"array");
   }
+
+  sort(){
+    this.reverse = !this.reverse
+    this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
+    this.getLottery()
+  }
+  
+  onTablePageChange(page: any){    
+    this.pagination = page
+    this.getLottery();
+  }
+
+  onTableSizesChange (event:any): void{
+    this.isItemsPerPage = event.target.value;
+    this.pagination = 1;
+    this.getLottery();
+}
+
+  onSearchLottery(searchValue: string) {
+    this.searchSubject.next(searchValue);
+  }
+
+  onSearch(searchValue:string){
+    this.searchTerm = searchValue;
+    this.getLottery();
+  }
+  
 }

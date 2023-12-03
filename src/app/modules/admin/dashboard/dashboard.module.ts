@@ -3,8 +3,8 @@ import { CommonModule, DatePipe, DecimalPipe, JsonPipe } from '@angular/common';
 import { DashboardComponent } from './dashboard.component';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgbPaginationModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
-
+import { OrderModule } from 'ngx-order-pipe';
+import {NgxPaginationModule} from 'ngx-pagination';
 const routes:Routes = [
   {path:'', component:DashboardComponent}
 ]
@@ -21,8 +21,8 @@ const routes:Routes = [
     DatePipe,
     JsonPipe,
     DecimalPipe,
-    NgbTypeaheadModule,
-    NgbPaginationModule,
+    OrderModule,
+    NgxPaginationModule
   ],
   exports: [DashboardComponent,RouterModule]
 })

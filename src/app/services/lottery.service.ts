@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -12,12 +12,20 @@ export class LotteryService {
 
   constructor(private http:HttpClient) { }
 
-  getAllLotteries():Observable<LOTTERY>{
-    const header = new HttpHeaders({
+  getAllLotteries(page:any,limit:any,column:any,sortType:any,searchTerm:any){
+    const header = new HttpHeaders({ 
       "Content-Type": "application/json",
       "Authorization": "Bearer "+this.token_ID
     })
-    return this.http.get<LOTTERY>(environment.apiUrl+'lotteries',{headers: header});
+
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append("page",page);
+    queryParams = queryParams.append("limit",limit);
+    queryParams = queryParams.append("sortField",column);
+    queryParams = queryParams.append("sortOrder",sortType);
+    queryParams = queryParams.append("search",searchTerm);
+
+    return this.http.get<LOTTERY[]>(environment.apiUrl+'lotteries',{params:queryParams,headers: header});
   }
 
   saveLottery(lotery_Data:any){

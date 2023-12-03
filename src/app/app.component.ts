@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { HttpClient } from '@angular/common/http';
+import { AuthInterceptorService } from './services/auth-interceptor.service';
 
 interface SideNavToggle {
   screenWidth: number;
@@ -18,9 +19,8 @@ export class AppComponent {
   tokenId!:any;
   isSideNavCollapsed = false;
   screenWidth = 0;
-  constructor(public authService:AuthService){
-} 
 
+  constructor(public authService:AuthService){}
 
   toggleSideNav(data:SideNavToggle){
     this.screenWidth = data.screenWidth;

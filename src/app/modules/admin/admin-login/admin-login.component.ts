@@ -10,7 +10,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class AdminLoginComponent implements OnInit {
   adminLogin!:FormGroup;
-   loading: boolean=false;
+  loading: boolean=false;
   constructor(private fb:FormBuilder,
               private authService:AuthService,
               private router :Router) { }
@@ -25,19 +25,19 @@ export class AdminLoginComponent implements OnInit {
   onSubmitLogin(formData:any){
     console.log(formData);
     this.loading = true;
-    setTimeout(()=>{
+   
       this.authService.login(formData).subscribe({
         next:(res:any)=>{
           alert(res.message);
-          this.loading = false
-          this.router.navigate(['/admin/dashboard']);
+          this.loading = false;
+          
+          localStorage.setItem('currentUser',JSON.stringify(res))
+
         },
         error:err =>{
           alert(err)
         }
       })
-    },2000)
- 
   }
 
 }

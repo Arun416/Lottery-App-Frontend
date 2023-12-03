@@ -4,28 +4,31 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { NgbModule, NgbPaginationModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import { SidebarModule } from './modules/admin/sidebar/sidebar.module';
 import { BodyModule } from './modules/admin/body/body.module';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
+import { AuthService } from './services/auth.service';
+import { LotteryService } from './services/lottery.service';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    NgbModule,
     SidebarModule,
     BodyModule,
+    NgbModule,
   ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptorService,
-      multi: true
+      multi: true,
+      deps: [AuthService]
     },
   ],
   bootstrap: [AppComponent]
