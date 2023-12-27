@@ -240,7 +240,7 @@ export class DashboardComponent implements OnInit, OnDestroy  {
       localStorage.setItem('lottery_No',JSON.stringify(this.lotteryArray))
       let data:any = localStorage.getItem('lottery_No');
       this.storedLotteryNumber1 = JSON.parse(data)
-      if(n ===''){
+      if(n ==''){
         for(let i=0; i<=this.storedLotteryNumber1.length;i++){
         if(i === this.storedLotteryNumber1.length){
         this.storedLotteryNumber1.shift();
@@ -281,13 +281,17 @@ export class DashboardComponent implements OnInit, OnDestroy  {
       localStorage.setItem('sub_Lottery_No2',JSON.stringify(this.storedLotteryNumber3))
       let dataL:any = localStorage.getItem('sub_Lottery_No2');
       this.storedLotteryNumber3 = JSON.parse(dataL);
+
+      setTimeout(()=>{this.isReadOnly=true;},600)
         }
       }
      
   }
 
   focusOnInput(event:any){
+    if(!this.isReadOnly){
     event.target.select();
+    }
   }
 
   onSubmitLottery(formData:any){
