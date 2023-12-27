@@ -1,5 +1,5 @@
 <!-- <app-sidebar *ngIf="tokenId!==null" [isExpanded]="sidebarExpanded" (toggleSidebar)="sidebarExpanded = !sidebarExpanded"></app-sidebar> -->
 <!-- <div class="content" [ngClass]="{ 'sidebarExpanded': sidebarExpanded }"> -->
-    <app-sidebar *ngIf="authService.isLoggedIn$ | async"  (onToggleSidebar)="toggleSideNav($event)"></app-sidebar>
-    <app-body  [collapsed]="isSideNavCollapsed"  [screenWidth]="screenWidth"></app-body>
+   
+  <router-outlet></router-outlet>
     <!-- </div> -->

@@ -1,0 +1,24 @@
+<div class="sidenav" [ngClass]="collapsed ? 'sidenav-collapsed':''">
+  <div class="logo-container">
+    <button class="logo" (click)="toggleCollapsed()" placement="end" ngbTooltip="Logoipsum">L</button>
+    <div class="logo-text" *ngIf="collapsed">Logoipsum</div>
+    <button class="btn-close" *ngIf="collapsed" (click)="closeSidenav()" placement="bottom" ngbTooltip="Close">
+        <span class="material-icons  collapse-button close-icon">close</span>
+    </button>
+  </div>
+  <ul class="sidenav-nav">
+    <li class="sidenav-nav-item" *ngFor="let data of navdata">
+      <a class="sidenav-nav-link"  placement="end" ngbTooltip={{data.label}} [routerLink]="[data.routerLink]"
+      routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <span class="material-icons sidenav-link-icon">{{data.icon}}</span>
+        <span class="sidenav-link-text" *ngIf="collapsed">{{data.label}}</span>
+      </a>
+    </li>
+    <li class="sidenav-nav-item" (click)="logout()">
+      <a class="sidenav-nav-link" placement="end" ngbTooltip="Logout">
+        <span class="material-icons sidenav-link-icon">logout</span>
+        <span class="sidenav-link-text" *ngIf="collapsed">Logout</span>
+      </a>
+    </li>
+  </ul>
+</div>

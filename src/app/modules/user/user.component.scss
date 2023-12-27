@@ -1,0 +1,28 @@
+.main_container  {
+    width: 100%;
+    height: 100vh;
+    background: url("https://images.pexels.com/photos/262438/pexels-photo-262438.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1") no-repeat center; 
+    background-size: cover;
+  }
+  
+  
+  @media (max-width: 576px) {
+      /* Styles for mobile screens */
+      .main_container {
+        background-size: cover;
+      }
+    }
+    
+    @media (min-width: 577px) and (max-width: 768px) {
+      /* Styles for tablets */
+      .main_container {
+        background-size: cover;
+      }
+    }
+    
+    @media (min-width: 769px) {
+      /* Styles for larger screens (laptops, desktops, etc.) */
+      .main_container {
+        background-size: cover;
+      }
+  }

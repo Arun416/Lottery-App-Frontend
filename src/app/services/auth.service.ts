@@ -25,7 +25,7 @@ export class AuthService {
   login(loginData:any){
     return this.http.post(environment.apiUrl+'admin/login',loginData).pipe(
       tap((response:any)=>{
-        this.router.navigate(['/admin/dashboard']);
+        this.router.navigateByUrl('/admin/dashboard');
         // const expiresInDuration = response.expiresIn;  
         this._isLoggedIn$.next(true);
         localStorage.setItem('auth',response.token);
@@ -51,6 +51,7 @@ export class AuthService {
     localStorage.removeItem('sub_Lottery_No1');
     localStorage.removeItem('sub_Lottery_No2') 
     this.router.navigate(['/admin/login'])
+
     window.location.reload();
   }
 
@@ -67,4 +68,8 @@ export class AuthService {
 	clear() {
 		this.toasts.splice(0, this.toasts.length);
 	}
+
+  getToken(){
+    return localStorage.getItem('auth') ||'';
+  }
 }

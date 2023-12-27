@@ -4,29 +4,33 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { SidebarModule } from './modules/admin/sidebar/sidebar.module';
-import { BodyModule } from './modules/admin/body/body.module';
-import { AuthInterceptorService } from './services/auth-interceptor.service';
+import { AuthInterceptorService } from './interceptors/auth-interceptor.service';
 import { AuthService } from './services/auth.service';
-import { LotteryService } from './services/lottery.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { TokenInterceptorService } from './interceptors/token-interceptor.service';
+
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
+  
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    SidebarModule,
-    BodyModule,
     NgbModule,
   ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptorService,
+      multi: true,
+      deps: [AuthService]
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
       multi: true,
       deps: [AuthService]
     },

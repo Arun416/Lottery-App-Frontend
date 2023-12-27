@@ -1,0 +1,50 @@
+/* .container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+ */
+.card {
+    width: 100%;
+    display: block;
+    float: none;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    top:20%;
+    padding: 20px;
+    max-width: 950px;
+}
+
+.card-block {
+    .table {
+        margin: auto;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+    }
+}
+
+@media (max-width: 576px) { 
+    .table { 
+      font-size: 14px;
+    } 
+
+    .card-block{
+        overflow-x: auto; 
+    } 
+
+    .card-block{ 
+        .table { 
+        width: 100%; 
+        max-width: 100%; 
+      } 
+    }
+
+    .card {
+        top:25px;
+        padding: 10px;
+    }
+  } 

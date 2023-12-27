@@ -1,0 +1,27 @@
+.body {
+    width: 100%;
+    z-index: 0;
+    position: relative;
+    transition: all .5s ease;
+}
+
+.body-trimmed {
+    width: calc(100% - 16.5625rem);
+    margin-left: 14rem;  
+}
+
+.body-md-screen {
+    width: 100%;
+
+} 
+
+
+
+/* content {
+    margin-left: 100px;
+    transition: 0.3s;
+    &.sidebarExpanded {
+      margin-left: 160px;
+    }
+  }
+   */

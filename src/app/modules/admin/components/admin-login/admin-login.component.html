@@ -1,0 +1,57 @@
+<div class="container p-0">
+        <div class="row mx-auto justify-content-center align-items-center w-100 p-0 login--content">
+        <div class="col-md-6">
+            <div class="card" style="width: 500px;height: 500px;">
+                <div class="card-body">
+                    <form [formGroup]="adminLogin" (ngSubmit)="onSubmitLogin(adminLogin.value)">
+                    <div class="row p-2 g-3">
+                        <div class="col-12 mb-3">
+                            <img src="assets/images/logo/Logo.svg"/>
+                        </div>
+                        <div class="col-12 mb-3">
+                            <span class="login--title">Login</span>
+                        </div>
+                        <div class="col-12 ">
+                            <p class="login--text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet doloribus ducimus, quaerat?</p>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-floating mb-3">
+                                <input type="email" 
+                                class="form-control" id="floatingInput" tabindex="1"
+                                placeholder="name@example.com" formControlName="username"
+                                [ngClass]="{ 'is-invalid': submitted && lfc['username'].errors }" required>
+                                <label for="floatingInput">Username</label>
+                                <div *ngIf="submitted && lfc['username'].errors" class="invalid-feedback">
+                                    <div *ngIf="lfc['username'].errors['required']">Username is required</div>
+                                </div>
+                              </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-floating mb-3">
+                                <input type="password" 
+                                class="form-control" id="floatingPassword" tabindex="2"
+                                placeholder="Password" formControlName="password"
+                                [ngClass]="{ 'is-invalid': submitted && lfc['password'].errors }" required>
+                                <label for="floatingPassword">Password</label>
+                                <div *ngIf="submitted && lfc['password'].errors" class="invalid-feedback">
+                                    <div *ngIf="lfc['password'].errors['required']">Password is required</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button [disabled]="loading" class="btn btn-primary  popup-btn pdl-5 rounded-3 px-3" style="width: 100px;vertical-align: middle;text-align: center;">
+                                <span>Login </span>
+                                <i class="px-1 fa fa-spinner fa-spin" *ngIf="loading"></i>
+                            </button>
+                        </div>
+                    </div> </form>
+                </div>
+              </div>
+        </div>
+        <div class="col-md-6">
+                <div >
+                    <img src="assets/images/images/Rectangle.png" class="admin-login-background"/>
+                </div>
+        </div>
+    </div>
+</div>

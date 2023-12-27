@@ -1,0 +1,64 @@
+.card {
+    width: 100%;
+    margin: 0 auto;
+    float: none;
+    top:20%;
+    padding: 20px;
+}
+
+.lottery-fields{
+    border-collapse: separate;
+    border-spacing: 0.8em;
+    padding-right: 25px;
+   
+}
+
+.lottery-input {
+    max-width: 64px !important;
+    border-radius: 7px !important;
+    background-color: #E6E0E9;
+    text-align: center;
+    font-family: Roboto;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 800;
+}
+
+.all_results_link {
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 160px;
+    height:50px;
+    background-color: white;
+    position: relative;
+    margin-top: 95px;
+    text-align: center;
+    cursor: pointer;
+    font-weight: 600;
+    a {
+        text-decoration: none;
+        font-size: 24px;
+        color: #000;
+
+    }
+
+    a:hover {
+        color: #f63137
+    }
+}
+
+.date-value {
+    h3 {
+        font-weight: 700;
+        color: #f63137
+    }
+}
+
+.time-value  {
+    h3 {
+        font-weight: 700;
+        color:#f63137;
+    }
+}

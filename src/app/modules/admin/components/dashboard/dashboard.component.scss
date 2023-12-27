@@ -1,0 +1,36 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.lottery-input {
+    max-width: 60px !important;
+    border-radius: 7px !important;
+    font-weight: 800;
+}
+
+.dashboard--content {
+    padding-top: 30px;
+}
+
+.lottery-fields{
+    border-collapse: separate;
+    border-spacing: 1em;
+}
+
+
+.lottery-input ,.lottery-input:focus{
+    background-color: #E6E0E9;
+    text-align: center;
+    font-family: Roboto;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 800;
+    border-radius: 0;
+}
+
+::ng-deep .ngx-pagination .current {
+    background-color: #0d6efd !important;
+}
+

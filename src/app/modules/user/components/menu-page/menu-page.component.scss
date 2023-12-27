@@ -1,0 +1,42 @@
+.container-fluid {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.menu-container {
+    width: 100%;
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    height: 100vh;
+    vertical-align: middle;
+    background: white;
+}
+
+.card-container {
+    max-width: 250px; /* Adjust the max-width as needed */
+    width: 100%;
+    height: auto;
+}
+
+.card {
+    border-radius: 12px;
+    background: #97E295;
+    padding: 20px;
+    cursor: pointer;
+}
+
+.card:hover {
+    background: border-box black;
+    color: white;
+}
+
+.menu-text {
+    text-align: center;
+    font-family: Roboto;
+    font-size: 37px;
+    font-style: normal;
+    font-weight: 450;
+    line-height: 64px;
+}

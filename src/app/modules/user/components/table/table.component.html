@@ -1,0 +1,40 @@
+<div class="container-fluid table-container">
+    <div class="row">
+              <div class="col-lg 3 col-md-12 col-sm-12 col-xs-12">
+              <div class="card mb-3 ">
+                <div class="card-block">
+                    <div class="mb-3 pt-2 p-2 text-center"><h4>All Results</h4></div>
+                    <table class="table table-bordered table-hover" >
+                        <thead class="table-dark" style="cursor: pointer;">
+                            <tr>
+                              <th scope="col" (click)="sort()">Date &nbsp;
+                                <span [hidden]="reverse">▼</span>
+                                <span [hidden]="!reverse">▲</span></th>
+                              <th scope="col">Time</th>
+                              <th scope="col">Lottery Number</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let data of lotteryData | paginate: {
+                                id:'listing_pagination',itemsPerPage:isItemsPerPage, currentPage: pagination,totalItems:totalRecords
+                              }">
+                              <td>{{data.Date |date}}</td>
+                              <td>{{data.Time |date: 'shortTime':'UTC+5:30'}}</td>
+                              <td>{{data.lottery_Number}}</td>
+                            </tr>
+                          </tbody>
+                      </table>
+                      <div class="d-flex flex-row justify-content-between  pt-2 mt-2">
+                        <div>
+                            <!-- <p>Showing {{isItemsPerPage}} out of {{totalRecords}} Entries</p> -->
+                        </div>   
+                        <div class="float-end pe-3">
+                            <pagination-controls id="listing_pagination" class="align-items-center"  previousLabel="Previous"
+                            nextLabel="Next" (pageChange)="onTablePageChange($event)"></pagination-controls>
+                        </div>
+                      </div>
+                </div>
+              </div>
+              </div>
+    </div>
+</div>

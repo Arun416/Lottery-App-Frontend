@@ -1,0 +1,178 @@
+<!-- <div class="container-fluid">
+    <div class="row align-items-center vh-100">
+        <div class="col-6 mx-auto">
+            <div class="card shadow border">
+                <div class="card-body d-flex flex-column align-items-center">
+                    <div class="d-flex flex-row justify-content-between ">
+                        <div class="date--value">
+                            <h5>Date: 12/3/2023</h5>
+                        </div>
+
+                        <div class="time--value">
+                            <h5>Time: 8.11PM</h5>
+                        </div>
+                    </div>
+                    <div>
+                        <table class="lottery-fields" style="margin: 0 auto;align-items:center;">
+                            <tr>
+                                <td>
+                                    <input #box1 readonly class="form-control lottery-input" type="text" 
+                                     maxlength="1" placeholder="0" aria-label="default input example" 
+                                     >
+                                </td>
+                                <td>
+                                    <input #box2 readonly class="form-control lottery-input" type="text" 
+                                    maxlength="1" placeholder="0" aria-label="default input example" 
+                                    >
+                                </td>
+                                <td>
+                                    <input #box3 readonly class="form-control lottery-input" type="text" formControlName="textbox3"
+                                    maxlength="1" placeholder="0" aria-label="default input example" 
+                                    >
+                                </td>
+                                <td>
+                                    <input #box4 readonly class="form-control lottery-input" type="text" formControlName="textbox4"
+                                    maxlength="1" placeholder="0" aria-label="default input example" 
+                                    >
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <input  readonly class="form-control lottery-input" type="text" 
+                                    aria-label="default input example" placeholder="0" > 
+                                </td>
+                                <td>
+                                    <input  readonly class="form-control lottery-input" type="text" 
+                                    aria-label="default input example"  placeholder="0">
+                                </td>
+                                <td>
+                                    <input  readonly class="form-control lottery-input" type="text" 
+                                    aria-label="default input example" placeholder="0">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <input readonly class="form-control lottery-input" type="text" 
+                                    aria-label="default input example" placeholder="0" >
+                                </td>
+                                <td>
+                                    <input readonly class="form-control lottery-input" type="text" 
+                                    aria-label="default input example" placeholder="0">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <input readonly class="form-control lottery-input" type="text" 
+                                    aria-label="default input example" placeholder="0">
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+ -->
+
+
+<div class="container">
+
+    <div class="row">
+              <div class="col-lg 3 col-md-12 col-sm-12 col-xs-12">
+              <div class="card mb-3">
+                <div class="card-block p-2">
+                    <div class="d-flex flex-row justify-content-between">
+                        <div class="date-value">
+                            <h3>{{latestResultInfo?.Date|date}}</h3>
+                        </div>
+                        <div class="time-value">
+                            <h3>{{latestResultInfo?.Time|date: 'shortTime':'UTC+5:30'}}</h3>
+                        </div>
+                    </div>
+                    <div>
+                        <form [formGroup]="lotteryForm">
+                        <table class="lottery-fields mx-auto w-auto p-1">
+                            <tr>
+                                <td>
+                                    <input #box1 readonly class="form-control lottery-input" type="text" 
+                                     maxlength="1" placeholder="0" aria-label="default input example" 
+                                     formControlName="boxNo1"
+                                     >
+                                </td>
+                                <td>
+                                    <input #box2 readonly class="form-control lottery-input" type="text" 
+                                    maxlength="1" placeholder="0" aria-label="default input example" 
+                                    formControlName="boxNo2"
+                                    >
+                                </td>
+                                <td>
+                                    <input #box3 readonly class="form-control lottery-input" type="text"
+                                    maxlength="1" placeholder="0" aria-label="default input example" 
+                                    formControlName="boxNo3"
+                                    >
+                                </td>
+                                <td>
+                                    <input #box4 readonly class="form-control lottery-input" type="text"
+                                    maxlength="1" placeholder="0" aria-label="default input example" 
+                                    formControlName="boxNo4"
+                                    >
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <input  readonly class="form-control lottery-input" type="text" 
+                                    aria-label="default input example" placeholder="0"  formControlName="boxNo5"> 
+                                </td>
+                                <td>
+                                    <input  readonly class="form-control lottery-input" type="text" 
+                                    aria-label="default input example"  placeholder="0"  formControlName="boxNo6">
+                                </td>
+                                <td>
+                                    <input  readonly class="form-control lottery-input" type="text" 
+                                    aria-label="default input example" placeholder="0"  formControlName="boxNo7">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <input readonly class="form-control lottery-input" type="text" 
+                                    aria-label="default input example" placeholder="0" formControlName="boxNo8">
+                                </td>
+                                <td>
+                                    <input readonly class="form-control lottery-input" type="text" 
+                                    aria-label="default input example" placeholder="0" formControlName="boxNo9">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <input readonly class="form-control lottery-input" type="text" 
+                                    aria-label="default input example" placeholder="0" formControlName="boxNo10">
+                                </td>
+                            </tr>
+                        </table></form>
+                    </div>
+              </div>
+              </div>
+              <div class="mt-3 pt-3">
+                <div class="all_results_link">
+                    <a routerLink="/user/records" >All Results</a>
+                </div>
+            </div>
+       
+          </div>
+
+        </div>
+</div>
