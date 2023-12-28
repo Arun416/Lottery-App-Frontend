@@ -283,7 +283,7 @@ export class DashboardComponent implements OnInit, OnDestroy  {
       this.storedLotteryNumber3 = JSON.parse(dataL);
 
       setTimeout(()=>{this.isReadOnly=true;},600)
-        }
+      }
       }
      
   }
