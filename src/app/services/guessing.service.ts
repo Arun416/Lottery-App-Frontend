@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -7,6 +8,7 @@ import { environment } from 'src/environments/environment';
 })
 export class GuessingService {
   token_ID:any = localStorage.getItem('auth');
+  private loadComponentSubject = new Subject<void>();
 
   constructor(private http:HttpClient) { }
 
@@ -45,5 +47,13 @@ export class GuessingService {
       "Authorization": "Bearer "+this.token_ID
     })
     return this.http.post(environment.apiUrl+'guessingDigit',formValue,{headers: header});
+  }
+
+  getLoadData() {
+    this.loadComponentSubject.next();
+  }
+
+  triggeringData() {
+    return this.loadComponentSubject.asObservable();
   }
 }

@@ -41,6 +41,7 @@ export class GuessingScreenComponent implements OnInit {
       next: (res:any)=>{
       console.log(res)
       this.guessing_List = res.data.guessdigitInfo[0]
+      
       this.totalRecords = res.data.total;
       this.getGuessingData(res.data.guessdigitInfo[0]);
       },

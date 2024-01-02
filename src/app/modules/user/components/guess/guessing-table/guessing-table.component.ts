@@ -56,4 +56,9 @@ export class GuessingTableComponent implements OnInit {
     this.pagination = page
     this.records();
   }
+
+  shouldBreakLine(text: string): boolean {
+    console.log(text.length)
+    return text.length>=10;
+  }
 }

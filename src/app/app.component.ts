@@ -22,19 +22,7 @@ export class AppComponent {
   screenWidth = 0;
   public showHeader: boolean = true;
 
-  constructor(public authService:AuthService,public router: Router){
-    /* router.events.subscribe((val) => {
-      if (val instanceof NavigationEnd) {
-        if (val.url == '/user/dashboard' || 
-            val.url == '/user/records' || 
-            val.url == '/user/menu' || val.url == '/user/guessing-screen') {
-          this.showHeader = false;
-        } else {
-          this.showHeader = true;
-        }
-      }
-    }); */
-  }
+  constructor(public authService:AuthService){}
 
   toggleSideNav(data:SideNavToggle){
     this.screenWidth = data.screenWidth;

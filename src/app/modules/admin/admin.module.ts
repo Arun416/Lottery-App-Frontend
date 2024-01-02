@@ -14,6 +14,7 @@ import { GuessingsComponent } from './components/guessings/guessings.component';
 import { AuthGuard } from 'src/app/services/auth.guard';
 import { BodyComponent } from './components/body/body.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { GuessTableComponent } from './components/guess-table/guess-table.component';
 
 const routes: Routes = [
     { 
@@ -32,7 +33,8 @@ const routes: Routes = [
     AdminLoginComponent,
     BodyComponent,
     DashboardComponent,
-    GuessingsComponent
+    GuessingsComponent,
+    GuessTableComponent
   ],
   imports: [
     CommonModule,
@@ -46,7 +48,7 @@ const routes: Routes = [
     NgxPaginationModule,
     HttpClientModule,
     NgbToastModule,
-    NgToastModule
+    NgToastModule,
   ],
   exports:[AdminComponent,RouterModule]
 })

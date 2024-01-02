@@ -1,0 +1,43 @@
+<div class="d-inline-flex gap-2">
+    <div><p>Show Entries:</p></div>
+    <div>
+        <select (change)="onTableSizesChange($event)">
+            <option *ngFor="let size of pageSizes">{{size}}</option>
+        </select>
+    </div>
+</div>
+<div class="float-end w-25">
+    <input class="form-control form-control-sm" placeholder="Search by 3 digit Guessing Number.." 
+    [(ngModel)]="searchTerm"  (input)="onSearchLottery(searchTerm)"/>
+</div>
+<table class="table  table-striped table-hover table-bordered">
+    <thead>
+      <tr style="cursor: pointer; user-select: none; ">
+        <th scope="col" (click)="sort()">Date &nbsp;
+            <span [hidden]="reverse">▼</span>
+            <span [hidden]="!reverse">▲</span></th>
+        <th scope="col">Time</th>
+        <th scope="col">3 Guessing Number</th>
+        <th scope="col">4 Guessing Number</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let guess_no of guessingInfo?.guessdigitInfo | paginate: {
+        id:'listing_pagination',itemsPerPage:isItemsPerPage, currentPage: pagination,totalItems:totalRecords
+      }">
+        <td>{{guess_no.Date | date}}</td>
+        <td>{{guess_no.Time |date: 'shortTime':'UTC+5:30'}}</td>
+        <td [ngClass]="{'breakLine': shouldBreakLine(guess_no.GuessingNumber_3digit)}" >{{guess_no.GuessingNumber_3digit}}</td>
+        <td [ngClass]="{'breakLine': shouldBreakLine(guess_no.GuessingNumber_4digit)}" >{{guess_no.GuessingNumber_4digit}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="d-flex flex-row justify-content-between  pt-2 mt-2">
+    <div>
+        <p>Showing {{isItemsPerPage}} out of {{totalRecords}} Entries</p>
+    </div>   
+    <div class="float-end pe-3">
+        <pagination-controls id="listing_pagination" class="align-items-center"  previousLabel="Previous"
+        nextLabel="Next" (pageChange)="onTablePageChange($event)"></pagination-controls>
+    </div>
+  </div>
