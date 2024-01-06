@@ -16,12 +16,11 @@ interface SideNavToggle {
 })
 export class AppComponent {
   title = 'lottery-frontend';
-  // sidebarExpanded = true;
-  tokenId!:any;
+  public showHeader: boolean = true;
   isSideNavCollapsed = false;
   screenWidth = 0;
-  public showHeader: boolean = true;
-
+  tokenId!:any;
+  
   constructor(public authService:AuthService){}
 
   toggleSideNav(data:SideNavToggle){
@@ -29,5 +28,4 @@ export class AppComponent {
     this.isSideNavCollapsed = data.collapsed
   }
 
-  
 }

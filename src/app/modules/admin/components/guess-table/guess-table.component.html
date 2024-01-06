@@ -21,7 +21,7 @@
         <th scope="col">4 Guessing Number</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody *ngIf="guessListLength?.length>0">
       <tr *ngFor="let guess_no of guessingInfo?.guessdigitInfo | paginate: {
         id:'listing_pagination',itemsPerPage:isItemsPerPage, currentPage: pagination,totalItems:totalRecords
       }">
@@ -30,6 +30,9 @@
         <td [ngClass]="{'breakLine': shouldBreakLine(guess_no.GuessingNumber_3digit)}" >{{guess_no.GuessingNumber_3digit}}</td>
         <td [ngClass]="{'breakLine': shouldBreakLine(guess_no.GuessingNumber_4digit)}" >{{guess_no.GuessingNumber_4digit}}</td>
       </tr>
+    </tbody>
+    <tbody *ngIf="guessListLength?.length<=0">
+      <span class="text-center text-secondary">No Data</span>
     </tbody>
   </table>
   <div class="d-flex flex-row justify-content-between  pt-2 mt-2">

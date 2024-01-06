@@ -15,6 +15,7 @@ import { AuthGuard } from 'src/app/services/auth.guard';
 import { BodyComponent } from './components/body/body.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { GuessTableComponent } from './components/guess-table/guess-table.component';
+import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
 
 const routes: Routes = [
     { 
@@ -49,6 +50,7 @@ const routes: Routes = [
     HttpClientModule,
     NgbToastModule,
     NgToastModule,
+    NgxLoadingModule.forRoot({}),
   ],
   exports:[AdminComponent,RouterModule]
 })

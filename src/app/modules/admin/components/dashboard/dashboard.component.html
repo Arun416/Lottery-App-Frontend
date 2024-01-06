@@ -1,6 +1,9 @@
 <div class="container">
     <div class="row dashboard--content justify-content-center align-items-center">
-        <form [formGroup]="lotForm"  (ngSubmit)="onSubmitLottery(lotForm.value)">
+        <form [formGroup]="lotteryInputForm"  (ngSubmit)="onSubmitLottery(lotteryInputForm.value)">
+        <div class="col-md-12 col-sm-12 col-xs-12 mb-3">
+            <h6>👋Welcome Back,{{currentUser.username|uppercase}}</h6>
+        </div>
         <div class="col-md-12 col-sm-12 col-xs-12 mb-3">
             <div class="float-end">
                 <button class="btn btn-primary"  [disabled]="isLoading"  style="border-radius: 30px;">

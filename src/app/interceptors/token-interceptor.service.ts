@@ -16,9 +16,10 @@ export class TokenInterceptorService implements HttpInterceptor{
         return next.handle(authReq).pipe(
             catchError(errorData=>{
                 if(errorData.status===401){
+                    alert(errorData.error.message)
                     authService.logout();
-                    setTimeout(()=>{this.toast.info({detail:"INFO",summary: "Session Expired!!Please Login",duration:5000,sticky:false,position:'topRight'})
-                },600)
+                    this.toast.info({detail:"INFO",summary: "Session Expired!!Please Login",duration:5000,sticky:false,position:'topRight'})
+
                 }
                 return throwError(errorData)
             })

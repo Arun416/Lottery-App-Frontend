@@ -9,34 +9,31 @@ import { GuessingService } from 'src/app/services/guessing.service';
   styleUrls: ['./guessing-table.component.scss']
 })
 export class GuessingTableComponent implements OnInit {
-
-  sortField = 'Time';
-  lotteryData:any[] = [];
-  guessingInfo:any;
   public pagination:number = 1;
   public totalRecords = 0 ;
   public pageSizes = [5,10,15];
   public isItemsPerPage = 5;
+  sortField = 'Time';
+  lotteryData:any[] = [];
+  guessingInfo:any;
   reverse:boolean = false;
   sortOrder: 'asc' | 'desc' = 'desc';
   searchTerm:string = "";
 
   constructor(private guessingService:GuessingService,
-              private title:Title,private toast:NgToastService) { }
+              private title:Title,
+              private toast:NgToastService) {}
 
   ngOnInit(): void {
     this.title.setTitle("All Results")
     this.records();
   }
   
- 
   records(){
     this.guessingService.getUserGuessingNumber(this.pagination,this.isItemsPerPage,this.sortOrder,"Time",
     this.searchTerm).subscribe({
       next: (res:any)=>{
-      this.guessingInfo = res.data;
-      console.log(this.guessingInfo);
-      
+      this.guessingInfo = res.data;      
       this.totalRecords = res.data.total;
       },
       error:err=>{
@@ -44,7 +41,6 @@ export class GuessingTableComponent implements OnInit {
       }
     })
   }
-
 
   sort(){
     this.reverse = !this.reverse
@@ -58,7 +54,6 @@ export class GuessingTableComponent implements OnInit {
   }
 
   shouldBreakLine(text: string): boolean {
-    console.log(text.length)
     return text.length>=10;
   }
 }

@@ -5,6 +5,7 @@ import { Title } from '@angular/platform-browser';
 import { NgToastService } from 'ng-angular-popup';
 import { Subject, debounceTime } from 'rxjs';
 import { GuessingService } from 'src/app/services/guessing.service';
+import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
   selector: 'app-guessings',
@@ -12,11 +13,11 @@ import { GuessingService } from 'src/app/services/guessing.service';
   styleUrls: ['./guessings.component.scss']
 })
 export class GuessingsComponent implements OnInit {
-  guessingDigitFForm!:FormGroup;
   public pagination:number = 1;
   public totalRecords = 0 ;
   public pageSizes = [5,10,15];
   public isItemsPerPage = 5;
+  guessingDigitFForm!:FormGroup;
   reverse:boolean = false;
   sortOrder: 'asc' | 'desc' = 'desc';
   searchTerm:string = "";
@@ -26,7 +27,8 @@ export class GuessingsComponent implements OnInit {
   constructor(private fb:FormBuilder,
               private guessingService:GuessingService,
               private toast: NgToastService,
-              private title:Title) { }
+              private title:Title,
+              private loadingService: LoadingService) { }
 
   ngOnInit(): void {
     this.title.setTitle("Guessings")
@@ -41,12 +43,14 @@ export class GuessingsComponent implements OnInit {
 
   
   getGuessingNo(){
+    this.loadingService.showLoader();
     this.guessingService.getGuessingNumber(this.pagination,this.isItemsPerPage,this.sortOrder,"Time",
       this.searchTerm).subscribe({
       next: (res:any)=>{
       this.guessingInfo = res.data;
       this.totalRecords = res.data.total;
       this.getGuessingData(res.data.guessdigitInfo[0]);
+      this.loadingService.hideLoader();
       },
       error:err=>{
         this.toast.error({detail:"ERROR",summary: err,duration:5000,sticky:false,position:'topRight'});
@@ -82,7 +86,6 @@ export class GuessingsComponent implements OnInit {
   onSubmitGuessing(formData:any){
       this.isLoading = true;
       this.guessingDigitFForm.get('GuessingNumber_3digit')?.value.replace(/,/g, '');
-        console.log(formData);
        this.guessingService.saveGuessingNumber(this.guessingDigitFForm.value).subscribe({
         next:(res:any)=>{
         this.isLoading = false;

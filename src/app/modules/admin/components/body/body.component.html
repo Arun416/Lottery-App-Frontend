@@ -1,4 +1,10 @@
+
 <div class="body" [ngClass]="getBodyClass()">
+    <ngx-loading
+      [show]="loading"
+      [config]="config"
+      [template]="loadingTemplate"
+    ></ngx-loading>
     <router-outlet></router-outlet>
     <lib-ng-toast></lib-ng-toast> 
 </div>

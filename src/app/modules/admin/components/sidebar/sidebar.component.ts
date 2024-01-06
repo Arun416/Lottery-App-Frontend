@@ -21,9 +21,8 @@ export class SidebarComponent implements OnInit {
   navdata = navbarData;
   tokenTimer:any;
   
-  constructor(private router:Router,private authService:AuthService) {
-    var currentUser:any = JSON.parse(localStorage.getItem('currentUser')as any) 
-   }
+  constructor(private router:Router,
+              private authService:AuthService) {}
 
   ngOnInit(): void {
     this.screenWidth = window.innerWidth;

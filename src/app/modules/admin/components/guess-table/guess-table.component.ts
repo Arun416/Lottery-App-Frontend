@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgToastService } from 'ng-angular-popup';
 import { Subject, Subscription, debounceTime } from 'rxjs';
 import { GuessingService } from 'src/app/services/guessing.service';
+import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
   selector: 'app-guess-table',
@@ -9,20 +10,22 @@ import { GuessingService } from 'src/app/services/guessing.service';
   styleUrls: ['./guess-table.component.scss']
 })
 export class GuessTableComponent implements OnInit,OnDestroy {
+  private searchSubject = new Subject<string>();
+  private readonly debounceTimeMs = 300;
+  private postRequestSubscription!: Subscription;
   public pagination:number = 1;
   public totalRecords = 0 ;
   public pageSizes = [5,10,15];
   public isItemsPerPage = 5;
+  guessingInfo:any;
   reverse:boolean = false;
   sortOrder: 'asc' | 'desc' = 'desc';
   searchTerm:string = "";
-  private searchSubject = new Subject<string>();
-  private readonly debounceTimeMs = 300;
-  guessingInfo:any;
-  private postRequestSubscription!: Subscription;
+  guessListLength:any;
   
   constructor(private guessingService:GuessingService,
-              private toast:NgToastService) { }
+              private toast:NgToastService,
+              private loadingService:LoadingService) { }
 
   ngOnInit(): void {
     this.searchSubject.pipe(debounceTime(this.debounceTimeMs)).subscribe((searchValue) => {
@@ -40,11 +43,14 @@ export class GuessTableComponent implements OnInit,OnDestroy {
   }
 
   getGuessingData(){
+    this.loadingService.showLoader();
     this.guessingService.getGuessingNumber(this.pagination,this.isItemsPerPage,this.sortOrder,"Time",
       this.searchTerm).subscribe({
       next: (res:any)=>{
       this.guessingInfo = res.data;
+      this.guessListLength = res.data.guessdigitInfo;      
       this.totalRecords = res.data.total;
+      this.loadingService.hideLoader();
       },
       error:err=>{
         this.toast.error({detail:"ERROR",summary: err,duration:5000,sticky:false,position:'topRight'});
@@ -64,9 +70,9 @@ export class GuessTableComponent implements OnInit,OnDestroy {
   }
 
   onTableSizesChange (event:any): void{
-      this.isItemsPerPage = event.target.value;
-      this.pagination = 1;
-      this.getGuessingData();
+    this.isItemsPerPage = event.target.value;
+    this.pagination = 1;
+    this.getGuessingData();
   }
 
   onSearchLottery(searchValue: string) {

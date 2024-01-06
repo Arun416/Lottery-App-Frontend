@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
+import { ngxLoadingAnimationTypes } from 'ngx-loading';
 import { AuthService } from 'src/app/services/auth.service';
+import { LoadingService } from 'src/app/services/loading.service';
 
 
 interface SideNavToggle {
   screenWidth: number;
   collapsed:boolean;
 }
-
 
 @Component({
   selector: 'app-admin',
@@ -18,10 +19,10 @@ export class AdminComponent implements OnInit {
   isSideNavCollapsed = false;
   screenWidth = 0;
   public showHeader: boolean = true;
+
   constructor(public authService:AuthService) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   toggleSideNav(data:SideNavToggle){
     this.screenWidth = data.screenWidth;
