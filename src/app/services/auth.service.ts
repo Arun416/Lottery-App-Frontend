@@ -16,6 +16,7 @@ export class AuthService {
   private _isLoggedIn$ = new BehaviorSubject<boolean>(false);
   isLoggedIn$ = this._isLoggedIn$.asObservable();
   public isTokenExpired:boolean = false;
+  toasts: Toast[] = [];
 
   constructor(private http: HttpClient,private router:Router) { 
     const token = localStorage.getItem('auth');
@@ -29,11 +30,9 @@ export class AuthService {
         // const expiresInDuration = response.expiresIn;  
         this._isLoggedIn$.next(true);
         localStorage.setItem('auth',response.token);
-
       })
     )
   }
-
 
   setTokenExpiredError(value: boolean): void {
     this.isTokenExpired = value;
@@ -44,6 +43,7 @@ export class AuthService {
   }
 
   logout(){
+  
     localStorage.removeItem('auth');
     localStorage.removeItem('currentUser')
     localStorage.removeItem('lottery_No');
@@ -51,11 +51,9 @@ export class AuthService {
     localStorage.removeItem('sub_Lottery_No1');
     localStorage.removeItem('sub_Lottery_No2') 
     this.router.navigate(['/admin/login'])
-
     window.location.reload();
+   
   }
-
-  toasts: Toast[] = [];
 
 	show(toast: Toast) {
 		this.toasts.push(toast);
