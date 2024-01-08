@@ -7,7 +7,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MenuPageComponent } from './components/menu-page/menu-page.component';
 import { DisplayComponent } from './components/display/display.component';
-import { AuthGuard } from 'src/app/services/auth.guard';
 import { TableComponent } from './components/table/table.component';
 import { GuessingScreenComponent } from './components/guess/guessing-screen/guessing-screen.component';
 import { GuessingTableComponent } from './components/guess/guessing-table/guessing-table.component';

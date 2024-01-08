@@ -3,7 +3,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { NgToastService } from 'ng-angular-popup';
-import { Subject, debounceTime } from 'rxjs';
 import { GuessingService } from 'src/app/services/guessing.service';
 import { LoadingService } from 'src/app/services/loading.service';
 
@@ -94,7 +93,7 @@ export class GuessingsComponent implements OnInit {
         this.getGuessingNo();
        },
         error:error =>{
-          this.toast.error({detail:"SUCCESS",summary: error,duration:5000,sticky:false,position:'topRight'})
+          this.toast.error({detail:"ERROR",summary: error,duration:5000,sticky:false,position:'topRight'})
         }
       })
   }

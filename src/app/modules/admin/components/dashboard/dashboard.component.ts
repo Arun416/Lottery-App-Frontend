@@ -5,6 +5,7 @@ import { Title } from '@angular/platform-browser';
 import { NgToastService } from 'ng-angular-popup';
 import { Subject, debounceTime } from 'rxjs';
 import { LOTTERY } from 'src/app/models/lottery';
+import { AuthService } from 'src/app/services/auth.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { LotteryService } from 'src/app/services/lottery.service';
 
@@ -40,11 +41,13 @@ export class DashboardComponent implements OnInit, OnDestroy  {
     private lotteryService:LotteryService,
     private toast: NgToastService,
     private title:Title,
-    private loadingService: LoadingService ) {
+    private loadingService: LoadingService ,
+    private authService:AuthService) {
   }
 
   ngOnInit(): void {
-    this.title.setTitle("Dashboard")
+    this.title.setTitle("Dashboard");
+    this.currentUser = this.authService.userValue;
     this.lotteryInputForm = this.fb.group({
         textbox1: [''],
         textbox2: [''],
@@ -69,8 +72,8 @@ export class DashboardComponent implements OnInit, OnDestroy  {
     this.searchSubject.pipe(debounceTime(this.debounceTimeMs)).subscribe((searchValue) => {
       this.onSearch(searchValue);
     });
-    let currentUser = JSON.parse(localStorage.getItem('currentUser')||'');
-    this.currentUser = currentUser;
+   
+    
   }
 
   ngOnDestroy() {

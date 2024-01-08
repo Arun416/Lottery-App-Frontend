@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { navbarData } from './nav-data';
 import { AuthService } from 'src/app/services/auth.service';
-import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 
 interface SideNavToggle {
   screenWidth: number;

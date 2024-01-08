@@ -1,8 +1,5 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { ngxLoadingAnimationTypes } from 'ngx-loading';
 import { AuthService } from 'src/app/services/auth.service';
-import { LoadingService } from 'src/app/services/loading.service';
-
 
 interface SideNavToggle {
   screenWidth: number;

@@ -1,10 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
-import { Router, TitleStrategy } from '@angular/router';
-import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
-import { Subject, debounceTime } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -48,7 +46,6 @@ export class AdminLoginComponent implements OnInit {
     this.authService.login(formData).subscribe({
         next:(res:any)=>{
           this.toast.success({detail:"SUCCESS",summary:res.message,duration:5000,sticky:false,position:'topRight'});
-          localStorage.setItem('currentUser',JSON.stringify(res));
           this.loading = false;
         },
         error:err =>{

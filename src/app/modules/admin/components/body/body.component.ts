@@ -1,6 +1,5 @@
 import { Component, Input, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
-import { NgToastService } from 'ng-angular-popup';
 import { Router } from '@angular/router';
 import { ngxLoadingAnimationTypes } from 'ngx-loading';
 import { LoadingService } from 'src/app/services/loading.service';
